@@ -216,8 +216,8 @@ def generate_response(query: str, context: str) -> str:
         return f"Erro ao gerar resposta: {str(e)}"
 
 def main():
-    st.title("🤖 Chatbot RAG com Astra DB")
-    st.write("Conectado à coleção:", COLLECTION_NAME)
+    st.title("🤖 Bot Luiz Lourenço")
+    st.write("Conectado à base de dados")
     
     # Inicializa cliente do Astra DB
     astra_client = AstraDBClient()
