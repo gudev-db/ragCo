@@ -21,7 +21,6 @@ executing==2.2.0
 filelock==3.18.0
 frozenlist==1.5.0
 fsspec==2025.3.2
-genai==2.1.0
 gitdb==4.0.12
 GitPython==3.1.44
 greenlet==3.1.1
