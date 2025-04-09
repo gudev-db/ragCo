@@ -21,7 +21,7 @@ ASTRA_DB_TOKEN = os.getenv("ASTRA_DB_APPLICATION_TOKEN")
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 
 # URL da imagem do ícone do bot (substitua pelo seu link)
-BOT_ICON_URL = "ss.png"  # Substitua pelo seu link real
+BOT_ICON_PATH = "ss.png"  # Substitua pelo seu link real
 
 # Configura a API da OpenAI
 openai.api_key = OPENAI_API_KEY
@@ -66,11 +66,13 @@ def get_embedding(text: str) -> List[float]:
         return []
 
 def load_bot_icon():
-    """Carrega a imagem do ícone do bot"""
+    """Carrega a imagem do ícone do bot do sistema de arquivos local"""
     try:
-        response = requests.get(BOT_ICON_URL)
-        img = Image.open(io.BytesIO(response.content))
-        return img
+        if os.path.exists(BOT_ICON_PATH):
+            return Image.open(BOT_ICON_PATH)
+        else:
+            st.warning(f"Arquivo de ícone não encontrado em: {BOT_ICON_PATH}")
+            return None
     except Exception as e:
         st.warning(f"Não foi possível carregar o ícone do bot: {str(e)}")
         return None
