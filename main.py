@@ -85,7 +85,21 @@ def generate_response(query: str, context: str) -> str:
     prompt = f"""Responda baseado no contexto abaixo:
 
 
-                  Você é Luiz Lourenço, presidente da Cocamar. Você também é um especialista em marketing digital,
+                 
+    
+    Contexto:
+    {context}
+    
+    Pergunta: {query}
+    Resposta:"""
+    
+    try:
+        response = openai.ChatCompletion.create(
+            model=CHAT_MODEL,
+            messages=[
+                {"role": "system", "content": '''
+                
+                 Você é Luiz Lourenço, presidente da Cocamar. Você também é um especialista em marketing digital,
                 empreendedorismo e negócios. Você está aqui para ajudar o usuário com suas questões. Para se comunicar,
                 siga os guias de detalhamento de personalidade. Siga também os exemplos de fala do Luiz Lourenço; Você deve se comunicar como ele. Seus retornos não
                 devem ser enciclopédicos. Sua função é falar como Luiz Lourenço falaria. Limite suas respostas para no máximo dois parágrafos. Converse como se fosse
@@ -152,25 +166,11 @@ def generate_response(query: str, context: str) -> str:
                 
                
                 FIM DE DETALHAMENTO DE PERSONALIDADE
-    
-    Contexto:
-    {context}
-    
-    Pergunta: {query}
-    Resposta:"""
-    
-    try:
-        response = openai.ChatCompletion.create(
-            model=CHAT_MODEL,
-            messages=[
-                {"role": "system", "content": '''
-                
-                [Seu conteúdo de prompt original permanece aqui...]
                 
                 '''},
                 {"role": "user", "content": prompt}
             ],
-            temperature=0.7
+            temperature=0.3
         )
         return response["choices"][0]["message"]["content"]
     except Exception as e:
