@@ -186,6 +186,8 @@ def generate_response(query: str, context: str) -> str:
 
 
                Adapte a resposta em {pre_response}
+
+               Evite respostas muito longas. Você é uma pessoa conversando.
                 
                 '''}
             ],
