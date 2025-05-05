@@ -224,46 +224,45 @@ def main():
     # Carrega o ícone do bot
     bot_icon = load_bot_icon()
     
-    st.title("🤖 Bot Luiz Lourenço")
+    # Cria um layout de colunas para o título com a imagem
+    col1, col2 = st.columns([1, 10])
+    with col1:
+        if bot_icon:
+            # Redimensiona a imagem para um tamanho adequado para o título
+            st.image(bot_icon, width=80)
+    with col2:
+        st.title("Bot Luiz Lourenço")
+    
     st.write("Conectado à base de dados")
     
-    # Inicializa cliente do Astra DB
+    # Restante do código permanece o mesmo...
     astra_client = AstraDBClient()
     
-    # Inicializa histórico de conversa
     if "messages" not in st.session_state:
         st.session_state.messages = []
     
-    # Exibe mensagens anteriores
     for message in st.session_state.messages:
         if message["role"] == "assistant" and bot_icon:
-            # Usa a imagem como ícone para o assistente
             with st.chat_message("assistant", avatar=bot_icon):
                 st.markdown(message["content"])
         else:
             with st.chat_message(message["role"]):
                 st.markdown(message["content"])
     
-    # Processa nova entrada
     if prompt := st.chat_input("Digite sua mensagem..."):
-        # Adiciona mensagem do usuário ao histórico
         st.session_state.messages.append({"role": "user", "content": prompt})
         with st.chat_message("user"):
             st.markdown(prompt)
         
-        # Obtém embedding e busca no Astra DB
         embedding = get_embedding(prompt)
         if embedding:
             results = astra_client.vector_search(COLLECTION_NAME, embedding)
             context = "\n".join([str(doc) for doc in results])
             
-            # Gera resposta
             response = generate_response(prompt, context)
             
-            # Adiciona resposta ao histórico
             st.session_state.messages.append({"role": "assistant", "content": response})
             
-            # Exibe a resposta com o ícone personalizado
             if bot_icon:
                 with st.chat_message("assistant", avatar=bot_icon):
                     st.markdown(response)
