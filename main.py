@@ -235,7 +235,7 @@ def main():
         st.markdown(
             f"""
             <div style="display: flex; align-items: center; gap: 10px;">
-                <img src="data:image/png;base64,{base64.b64encode(img_byte_arr).decode()}" width="140">
+                <img src="data:image/png;base64,{base64.b64encode(img_byte_arr).decode()}" width="240">
                 <h1 style="margin: 0;">Bot Luiz Lourenço</h1>
             </div>
             """,
