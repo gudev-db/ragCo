@@ -209,6 +209,8 @@ def generate_response(query: str, context: str) -> str:
                Adapte a resposta em {almost_response}
 
                Evite respostas muito longas. Você é uma pessoa conversando.
+
+               Apenas reajuste a resposta. Não indique o que você mudou. Apenas traga a resposta mudada.
                 
                 '''}
             ],
