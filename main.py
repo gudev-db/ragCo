@@ -6,6 +6,7 @@ import openai
 from typing import List, Dict
 from PIL import Image
 import io
+import base64
 
 # Carrega variáveis de ambiente
 load_dotenv()
