@@ -219,18 +219,28 @@ def generate_response(query: str, context: str) -> str:
 
 def main():
     # Configuração da página
-    st.set_page_config(page_title="🤖 Bot Luiz Lourenço", page_icon=":robot_face:")
+    st.set_page_config(page_title="Bot Luiz Lourenço", page_icon=":robot_face:")
     
     # Carrega o ícone do bot
     bot_icon = load_bot_icon()
     
-    # Cria um layout de colunas para o título com a imagem
-    col1, col2 = st.columns([1, 10])
-    with col1:
-        if bot_icon:
-            # Redimensiona a imagem para um tamanho adequado para o título
-            st.image(bot_icon, width=80)
-    with col2:
+    # Cria um título com a imagem do bot
+    if bot_icon:
+        # Converte a imagem para bytes para exibir no título
+        img_byte_arr = io.BytesIO()
+        bot_icon.save(img_byte_arr, format='PNG')
+        img_byte_arr = img_byte_arr.getvalue()
+        
+        st.markdown(
+            f"""
+            <div style="display: flex; align-items: center; gap: 10px;">
+                <img src="data:image/png;base64,{base64.b64encode(img_byte_arr).decode()}" width="40">
+                <h1 style="margin: 0;">Bot Luiz Lourenço</h1>
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
+    else:
         st.title("Bot Luiz Lourenço")
     
     st.write("Conectado à base de dados")
