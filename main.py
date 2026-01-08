@@ -22,7 +22,6 @@ ASTRA_DB_TOKEN = os.getenv("ASTRA_DB_APPLICATION_TOKEN")
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 
 # URL da imagem do ícone do bot (substitua pelo seu link)
-BOT_ICON_PATH = "Screenshot from 2025-04-09 13-16-06.png"  # Substitua pelo seu link real
 
 # Configura a API da OpenAI
 openai.api_key = OPENAI_API_KEY
@@ -208,7 +207,7 @@ def generate_response(query: str, context: str) -> str:
 
 def main():
     # Configuração da página
-    st.set_page_config(page_title="Bot Luiz Lourenço", page_icon=":robot_face:")
+    st.set_page_config(page_title="Proto Gaia", page_icon=":robot_face:")
     
     # Carrega o ícone do bot
     bot_icon = load_bot_icon()
