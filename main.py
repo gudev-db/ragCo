@@ -89,13 +89,13 @@ def main():
             f"""
             <div style="display: flex; align-items: center; gap: 10px;">
                 <img src="data:image/png;base64,{base64.b64encode(img_byte_arr).decode()}" width="240">
-                <h1 style="margin: 0;">Bot Luiz Lourenço</h1>
+                <h1 style="margin: 0;">Proto Gaia</h1>
             </div>
             """,
             unsafe_allow_html=True
         )
     else:
-        st.title("Bot Luiz Lourenço")
+        st.title("Proto Gaia")
     
     st.write("Olá! Como posso ajudá-lo hoje?")
     
