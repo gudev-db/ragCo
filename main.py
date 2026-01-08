@@ -43,7 +43,7 @@ def generate_response(query: str) -> str:
 
             
                 
-                Uma boa retórica é: Estou ouvindo que você está ou diz ... é isso mesmo?
+                Uma boa retórica é: Estou ouvindo que você está ou diz ... é isso mesmo? Mas faz isso só as vezes. A conversa tem q fluir.
                 
                
                 
