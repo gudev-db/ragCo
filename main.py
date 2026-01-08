@@ -29,32 +29,38 @@ def load_bot_icon():
         st.warning(f"Não foi possível carregar o ícone do bot: {str(e)}")
         return None
 
-def generate_response(query: str) -> str:
-    """Gera resposta usando o modelo de chat da OpenAI"""
+def generate_response(messages_history: list) -> str:
+    """Gera resposta usando o modelo de chat da OpenAI com histórico"""
+    
+    # Cria o sistema prompt
+    system_prompt = {
+        "role": "system", 
+        "content": '''
+        Você é um chatbot empático que se comunica usando os padrões de comunicação não violenta e tem acesso ao vasto conhecimento do DSM-V. 
+        Você consegue detectar pontos importantes na fala do usuário. Nunca diga "sinto muito" ou frases similares vazias.
+        
+        Seu papel é instigar o usuário a sempre falar mais. Não faça sugestões diretas.
+        A conversa tem que fluir naturalmente. Você deve instigar o usuário a falar mais sempre.
+        
+        Seja natural, como em uma conversa real. Use perguntas abertas e mostre genuíno interesse no que o usuário está compartilhando.
+        
+        IMPORTANTE: Considere sempre todo o histórico da conversa para manter a continuidade e contextualizar suas respostas.
+        '''
+    }
+    
+    # Prepara o array de mensagens incluindo o system prompt e todo o histórico
+    messages = [system_prompt] + messages_history
     
     try:
         response = openai.ChatCompletion.create(
             model=CHAT_MODEL,
-            messages=[
-                {"role": "system", "content": '''
-                Você é um chatbot empático que se comunica usando os padrões de comunicação não violenta e tem acesso ao vasto conhecimento do DSM-V. Você consegue
-                detectar pontos importantes na fala do usuário. Nunca diga sinto muito ou coisas assim.
-                Seu papel é instigar o usuário a sempre falar mais. Não faça sugestões diretas.
-
-            
-                
-                A conversa tem q fluir. Você deve instigar o usuário a falar mais sempre.
-                
-               
-                
-                '''},
-                {"role": "user", "content": query}
-            ],
-            temperature=0.7  # Aumentei um pouco para mais variação nas respostas
+            messages=messages,
+            temperature=0.7
         )
         return response["choices"][0]["message"]["content"]
     except Exception as e:
-        return f"Desculpe, tive um problema ao processar sua mensagem. Pode tentar de novo?"
+        st.error(f"Erro ao gerar resposta: {str(e)}")
+        return "Desculpe, tive um problema ao processar sua mensagem. Pode tentar de novo?"
 
 def main():
     # Configuração da página
@@ -100,17 +106,20 @@ def main():
     # Campo de entrada de mensagem
     if prompt := st.chat_input("Digite sua mensagem..."):
         # Adiciona a mensagem do usuário ao histórico
-        st.session_state.messages.append({"role": "user", "content": prompt})
+        user_message = {"role": "user", "content": prompt}
+        st.session_state.messages.append(user_message)
         
         # Exibe a mensagem do usuário
         with st.chat_message("user"):
             st.markdown(prompt)
         
-        # Gera a resposta
-        response = generate_response(prompt)
+        # Gera a resposta usando TODO o histórico da conversa
+        with st.spinner("Pensando..."):
+            response = generate_response(st.session_state.messages.copy())
         
         # Adiciona a resposta ao histórico
-        st.session_state.messages.append({"role": "assistant", "content": response})
+        assistant_message = {"role": "assistant", "content": response}
+        st.session_state.messages.append(assistant_message)
         
         # Exibe a resposta
         if bot_icon:
