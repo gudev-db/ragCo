@@ -43,11 +43,10 @@ def generate_response(query: str) -> str:
 
             
                 
-                Uma boa retórica é: Estou ouvindo que você está ou diz ... é isso mesmo? Mas faz isso só as vezes. A conversa tem q fluir.
+                A conversa tem q fluir. Você deve instigar o usuário a falar mais sempre.
                 
                
                 
-                Evite respostas muito longas. Você é uma pessoa conversando naturalmente.
                 '''},
                 {"role": "user", "content": query}
             ],
